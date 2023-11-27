@@ -1,0 +1,58 @@
+defaults:
+  - common
+  - _self_
+
+audio:
+  device: ${device}
+  feature_extractor: nnAudio # torchaudio librosa nnAudio
+  audio_augmentation:
+    pitch_shift_steps: null # [-2, -1, 0, 1, 2]  # Must include 0!
+  loader: torchaudio # "librosa" # or torchaudio
+  features_dir:  "./data/features"
+  segments_dir: "./data/segments"
+  sr: 24000
+  mono: true
+  resample: true
+  slide_window_sec: 1.5  
+  audio_load_sec: 3.0  
+  normalize: false
+  feature: cqt # cqt spectrogram melspectrogram chroma_stft raw
+  chroma_stft_params:
+    sr: 24000
+    n_fft: 2048
+    hop_length: 512
+    n_chroma: 84
+  cqt_params: 
+    sr: 24000
+    n_bins: 192
+    hop_length: 512
+    bins_per_octave: 24
+  spectrogram_params:
+    n_fft: 512
+    win_length: 64
+    hop_length: 64
+  melspectrogram_params:
+    n_fft: 2048
+    win_length: null
+    hop_length: null
+    n_mels: 80
+    f_min: 0
+    f_max: null
+
+dataset:
+  audio_augmentation:
+    pitch_shift_steps: null
+  max_input_dim: null
+  cache_data_mem: false
+  features_dir: ${audio.features_dir}
+  segments_dir: ${audio.segments_dir}
+  audio_dir: "./data/audio"
+  num_workers: ${num_workers}
+  train_batch_size: 8 
+  valid_batch_size: 1 
+  train_shuffle: false
+  test_batch_size: 64 
+  train_csv_file: ./data/train.csv
+  valid_csv_file: ./data/valid.csv
+  test_csv_file: ./data/test.csv
+  dummy_csv_file: ./data/dummy.csv

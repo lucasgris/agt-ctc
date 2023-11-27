@@ -1,0 +1,24 @@
+path: ./logs/${hydra.job.config_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+hydra:
+  run:
+    dir: ${path} 
+  job_logging:
+    handlers:
+      file:
+        filename: ${hydra.run.dir}/${hydra.job.name}_${now:%Y-%m-%d}_${now:%H-%M-%S}.log  
+
+defaults:
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+dry_run: false
+comment: ""
+random_seed: 101
+device: "cuda"
+fp16: false
+tqdm: true
+tb_log_dir: tensorboard
+log_interval_updates: 200
+num_workers: 0
+print_examples_validation: true
